@@ -21,7 +21,7 @@ export const Dashboard: React.FC = () => {
   const fetchFiles = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3001/api/files/my-files', {
+      const response = await fetch('https://file-transfer-website-2.onrender.com/api/files/my-files', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -45,7 +45,7 @@ export const Dashboard: React.FC = () => {
   const fetchReceived = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3001/api/files/received-files', {
+      const response = await fetch('https://file-transfer-website-2.onrender.com/api/files/received-files', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

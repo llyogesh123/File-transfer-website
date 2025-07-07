@@ -41,7 +41,7 @@ export const FileReceive: React.FC = () => {
     setFileInfo(null);
 
     try {
-      const resp = await fetch(`http://localhost:3001/api/files/transfer/${code}`);
+      const resp = await fetch(`https://file-transfer-website-2.onrender.com/api/files/transfer/${code}`);
       if (!resp.ok) {
         setStatus('error');
         setErrorMsg('File not found');
@@ -74,7 +74,7 @@ export const FileReceive: React.FC = () => {
 
     setStatus('downloading');
     try {
-      const url = `http://localhost:3001/api/files/download/${code}`;
+      const url = `https://file-transfer-website-2.onrender.com/api/files/download/${code}`;
       // Use anchor trick for browser download handling auth token if any
       const anchor = document.createElement('a');
       anchor.href = url + (token ? `?token=${token}` : '');

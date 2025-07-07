@@ -29,7 +29,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:3001', {
+      const newSocket = io(import.meta.env.VITE_API_URL as string, {
         transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionAttempts: 5,

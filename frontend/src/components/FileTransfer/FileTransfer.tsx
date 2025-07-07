@@ -48,7 +48,7 @@ export const FileTransfer: React.FC<FileTransferProps> = ({ file }) => {
     if (!query.trim() || !token) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/api/files/search-users?q=${query}`, {
+      const response = await fetch(`https://file-transfer-website-2.onrender.com/api/files/search-users?q=${query}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

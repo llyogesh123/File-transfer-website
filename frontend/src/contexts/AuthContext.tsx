@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/me', {
+      const response = await fetch(`https://file-transfer-website-2.onrender.com/api/auth/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -66,7 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const login = async (username: string, password: string) => {
-    const response = await fetch('http://localhost:3001/api/auth/login', {
+    const response = await fetch(`https://file-transfer-website-2.onrender.com/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const register = async (username: string, email: string, password: string) => {
-    const response = await fetch('http://localhost:3001/api/auth/register', {
+    const response = await fetch(`https://file-transfer-website-2.onrender.com/api/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -67,7 +67,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onUploadComplete }) => {
         }
       };
 
-      xhr.open('POST', 'http://localhost:3001/api/files/upload');
+      xhr.open('POST', 'https://file-transfer-website-2.onrender.com/api/files/upload');
       xhr.setRequestHeader('Authorization', `Bearer ${token}`);
       xhr.send(formData);
     } catch (error) {
