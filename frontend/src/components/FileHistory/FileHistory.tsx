@@ -1,12 +1,33 @@
-import { Calendar, Clock, Download, File, Share2, User } from 'lucide-react';
+import { Calendar, Clock, Download, File, Share2, User, Trash } from 'lucide-react';
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface FileHistoryProps {
   files: any[];
+  onDelete: (id: string) => void;
 }
 
-export const FileHistory: React.FC<FileHistoryProps> = ({ files }) => {
+export const FileHistory: React.FC<FileHistoryProps> = ({ files, onDelete }) => {
+  const handleDelete = async (id: string) => {
+    try {
+      const token = localStorage.getItem('token');
+      const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/files/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (resp.ok) {
+        onDelete(id);
+      } else {
+        alert('Failed to delete');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error deleting file');
+    }
+  };
+
   const { token, user } = useAuth();
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
@@ -108,6 +129,13 @@ export const FileHistory: React.FC<FileHistoryProps> = ({ files }) => {
                           </span>
                         </div>
                         
+                        <button
+                          onClick={() => handleDelete(file.id)}
+                          className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-full text-sm"
+                        >
+                          <Trash className="w-4 h-4" />
+                          <span>Delete</span>
+                        </button>
                         <div className={`flex items-center space-x-1 ${getStatusColor(file.transfer_status)}`}>
                           {getStatusIcon(file.transfer_status)}
                           <span className="text-sm font-medium capitalize">

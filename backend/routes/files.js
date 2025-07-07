@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
+import fs from 'fs';
 import File from '../models/File.js';
 import User from '../models/User.js';
 import { authenticateToken } from '../middleware/auth.js';
@@ -175,6 +176,31 @@ router.get('/download/:code', async (req, res) => {
   } catch (error) {
     console.error('Download error:', error);
     res.status(500).json({ error: 'Failed to download file' });
+  }
+});
+
+// Delete file by id
+router.delete('/:id', authenticateToken, async (req, res) => {
+  try {
+    const file = await File.findById(req.params.id);
+    if (!file) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+    // Only sender or recipient may delete
+    if (file.senderId.toString() !== req.user._id.toString() && file.recipientId?.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: 'Not authorized' });
+    }
+    // Remove from disk if exists
+    try {
+      await fs.promises.unlink(file.uploadPath);
+    } catch (e) {
+      console.warn('File unlink', e.message);
+    }
+    await file.deleteOne();
+    res.json({ message: 'File deleted' });
+  } catch (err) {
+    console.error('Delete file error:', err);
+    res.status(500).json({ error: 'Failed to delete file' });
   }
 });
 

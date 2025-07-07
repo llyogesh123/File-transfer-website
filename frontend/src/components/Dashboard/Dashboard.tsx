@@ -12,6 +12,11 @@ export const Dashboard: React.FC = () => {
   const [files, setFiles] = useState<any[]>([]);
   const [receivedFiles, setReceivedFiles] = useState<any[]>([]);
 
+  const handleDeleteFile = (id: string) => {
+    setFiles(prev => prev.filter(f => f.id !== id));
+    setReceivedFiles(prev => prev.filter(f => f.id !== id));
+  };
+
   const handleUploadComplete = (file: any) => {
     setCurrentFile(file);
     setActiveTab('transfer');
@@ -80,7 +85,7 @@ export const Dashboard: React.FC = () => {
           )}
 
           {activeTab === 'history' && (
-            <FileHistory files={[...files, ...receivedFiles]} />
+             <FileHistory files={[...files, ...receivedFiles]} onDelete={handleDeleteFile} />
           )}
         </div>
       </div>
