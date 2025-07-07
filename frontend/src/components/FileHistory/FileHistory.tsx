@@ -92,7 +92,7 @@ export const FileHistory: React.FC<FileHistoryProps> = ({ files }) => {
                           <button
                             onClick={() => {
                               const link = document.createElement('a');
-                              link.href = `http://localhost:3001/api/files/download/${file.transfer_code}${token ? `?token=${token}` : ''}`;
+                              link.href = `https://file-transfer-website-2.onrender.com/api/files/download/${file.transfer_code}${token ? `?token=${token}` : ''}`;
                               link.target = '_blank';
                               link.click();
                             }}
